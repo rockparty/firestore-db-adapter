@@ -1,16 +1,15 @@
-import { deleteOneFromFirestore } from '@/functions/delete-one-from-firestore'
+import { deleteOneByIdFromFirestore } from '@/functions/delete-one-by-id-from-firestore'
 import { isTruthy } from '@/utils'
 import {
   expectToBeTrue,
   collectionName,
   payload,
-  key,
   value,
-  deleteOneArgs,
+  deleteOneByIdArgs,
 } from '@/__tests__/__helpers__'
 import { firestoreTestHelper } from '@/__tests__/__helpers__/adapter.test-helper'
 
-describe('DeleteOneFromFirestore', () => {
+describe('DeleteOneByIdFromFirestore', () => {
   const { doBeforeAll, doBeforeEach, doAfterAll, db } = firestoreTestHelper()
 
   beforeAll(async () => await doBeforeAll())
@@ -21,31 +20,27 @@ describe('DeleteOneFromFirestore', () => {
 
   const makeSut = () => {
     return {
-      sut: deleteOneFromFirestore(db()),
+      sut: deleteOneByIdFromFirestore(db()),
       collectionName,
       payload,
-      key,
-      value,
-      args: deleteOneArgs,
+      id: value,
+      args: deleteOneByIdArgs,
     }
   }
 
   it('should delete one', async () => {
-    const { sut, collectionName, payload, key, args, value } = makeSut()
+    const { sut, collectionName, payload, args, id } = makeSut()
 
-    await db().collection(collectionName).add(payload)
+    await db().collection(collectionName).doc(id).set(payload)
 
     const response = await sut(args)
 
-    const data = await db()
-      .collection(collectionName)
-      .where(key, '==', value)
-      .get()
-    const fromDb = data.docs[0]?.exists ? data.docs[0].data() : null
+    const data = await db().collection(collectionName).doc(id).get()
+    const fromDb = data?.exists ? data.data() : null
 
     const result = response === true && !isTruthy(fromDb)
     expectToBeTrue(result, {
-      printIfNotTrue: { payload, response, fromDb },
+      printIfNotTrue: { payload, response, fromDb, id, dataId: data.id },
     })
   })
 })

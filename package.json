@@ -90,7 +90,7 @@
     "node": "*"
   },
   "dependencies": {
-    "@rockparty/db-adapter": "^0.0.2",
+    "@rockparty/db-adapter": "^0.0.3",
     "firebase-admin": "^9.9.0"
   }
 }

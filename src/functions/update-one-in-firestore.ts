@@ -16,11 +16,11 @@ export function updateOneInFirestore(db: firestore.Firestore): UpdateOneFn {
 
     if (!doc) return null
 
-    const original = doc.data()
+    const original = doc.data() as T
     await doc.ref.update(payload)
 
     const updated = Object.assign({}, original, payload)
 
-    return updated as T & U
+    return updated
   }
 }

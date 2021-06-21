@@ -1,4 +1,4 @@
-import { updateOneInFirestore } from '@/functions'
+import { updateOneInFirestore } from '@/functions/update-one-in-firestore'
 import { equals, isTruthy } from '@/utils'
 import {
   expectToBeTrue,

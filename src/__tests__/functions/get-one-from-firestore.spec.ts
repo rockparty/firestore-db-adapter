@@ -28,22 +28,7 @@ describe('GetOneFromFirestore', () => {
     }
   }
 
-  it('should return falsy', async () => {
-    const { sut, args, collectionName } = makeSut()
-
-    const data = await db()
-      .collection(collectionName)
-      .where(key, '==', value)
-      .get()
-    const fromDb = data.docs[0]?.exists ? data.docs[0].data() : null
-
-    const response = await sut(args)
-
-    const result = !isTruthy(response) && !isTruthy(fromDb)
-    expectToBeTrue(result, { printIfNotTrue: response })
-  })
-
-  it('should return truthy', async () => {
+  it('should return one', async () => {
     const { sut, collectionName, payload, args } = makeSut()
 
     await db().collection(collectionName).add(payload)

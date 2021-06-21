@@ -1,9 +1,13 @@
 import {
+  DeleteOneByIdFnArgs,
   DeleteOneFnArgs,
   GetAllFnArgs,
   GetManyFnArgs,
+  GetOneByIdFnArgs,
   GetOneFnArgs,
+  InsertOneByIdFnArgs,
   InsertOneFnArgs,
+  UpdateOneByIdFnArgs,
   UpdateOneFnArgs,
 } from '@rockparty/db-adapter'
 
@@ -50,4 +54,26 @@ export const getManyArgs: GetManyFnArgs<Foo> = {
   from: collectionName,
   by: key,
   matching: value,
+}
+
+export const insertOneByIdArgs: InsertOneByIdFnArgs<Foo> = {
+  in: collectionName,
+  as: payload,
+  idKey: key,
+}
+
+export const getOneByIdArgs: GetOneByIdFnArgs = {
+  from: collectionName,
+  id: value,
+}
+
+export const updateOneByIdArgs: UpdateOneByIdFnArgs<Foo, Partial<Foo>> = {
+  from: collectionName,
+  id: value,
+  as: modified,
+}
+
+export const deleteOneByIdArgs: DeleteOneByIdFnArgs = {
+  from: collectionName,
+  id: value,
 }
