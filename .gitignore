@@ -1,0 +1,6 @@
+coverage
+dist
+**/node_modules
+.eslintcache
+firestore-debug.log
+ui-debug.log
